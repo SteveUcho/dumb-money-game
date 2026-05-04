@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { WithPriceColor } from "./WithPriceColor";
-import { liquidGlass, liquidGlassScale, liquidGlassShadow } from "../utils/classNames";
+import { liquidGlass, liquidGlassScale } from "../utils/classNames";
 import GambleTab from "./GambleTab";
 import { ActionCards } from "./ActionCardsTab";
 
@@ -15,7 +15,7 @@ export function ActionSelector() {
   return (
     <>
       <div className="absolute bottom-4 left-4 ">
-        <div className={["flex gap-5", liquidGlass, liquidGlassShadow, liquidGlassScale].join(" ")}>
+        <div className={["flex gap-5", liquidGlass, liquidGlassScale].join(" ")}>
           <WithPriceColor price={10} onClick={handleClick(0)}>
             <span className="font-bold">Actions ▲</span>
           </WithPriceColor>
@@ -24,8 +24,8 @@ export function ActionSelector() {
           </WithPriceColor>
         </div>
       </div>
-      <ActionCards open={openChild == 0} handleClose={closeTab} />
-      <GambleTab open={openChild == 1} handleClose={closeTab} />
+      <ActionCards open={openChild === 0} handleClose={closeTab} />
+      <GambleTab open={openChild === 1} handleClose={closeTab} />
     </>
   );
 }

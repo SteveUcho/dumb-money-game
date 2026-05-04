@@ -40,7 +40,7 @@ const listVariant: Variants = {
       delayChildren: stagger(0.1, { startDelay: 0.1 }),
     },
   },
-  hidden: { y: 800 },
+  hidden: { y: 600, opacity: 0 },
 };
 
 const itemVariant = {
@@ -53,6 +53,7 @@ export function ActionCards(props: ActionCardsProps) {
   return (
     <motion.div
       variants={listVariant}
+      initial={{ y: 600 }}
       animate={open ? "visible" : "hidden"}
       style={{ height: "unset" }}
       className={"flex flex-col gap-4 " + popinCard}
@@ -77,7 +78,7 @@ export function ActionCards(props: ActionCardsProps) {
             className={[
               liquidGlass,
               liquidGlassShadow,
-              "p-6 text-center aspect-5/2 flex flex-col justify-center",
+              "p-6 text-center aspect-4/1 flex flex-col justify-center",
             ].join(" ")}
           >
             <p>{cardData.body}</p>
