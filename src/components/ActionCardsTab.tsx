@@ -40,7 +40,7 @@ const listVariant: Variants = {
       delayChildren: stagger(0.1, { startDelay: 0.1 }),
     },
   },
-  hidden: { y: 600, opacity: 0 },
+  hidden: { y: "100vh" },
 };
 
 const itemVariant = {

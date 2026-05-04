@@ -10,8 +10,8 @@ export default function GambleTab(props: GambleTabProps) {
   const { open, handleClose } = props;
   return (
     <motion.div
-      initial={{ y: 600 }}
-      animate={{ y: open ? 0 : 600 }}
+      initial={{ y: "100vh" }}
+      animate={{ y: open ? 0 : "100vh" }}
       transition={{ type: "spring", stiffness: 400, damping: 30 }}
       className={[popinCard, liquidGlass, liquidGlassShadow].join(" ")}
     >

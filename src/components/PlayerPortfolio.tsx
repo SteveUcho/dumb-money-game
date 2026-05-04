@@ -5,7 +5,7 @@ import { liquidGlass, liquidGlassScale, liquidGlassShadow, popinCard } from "../
 export function PlayerPortfolio(props: React.HTMLAttributes<HTMLDivElement>) {
   const [source, animate] = useAnimate();
 
-  const from = { y: 600 };
+  const from = { y: "100vh" };
   const to = { y: 0 };
   const spring: ValueAnimationTransition = {
     type: "spring",
@@ -32,7 +32,7 @@ export function PlayerPortfolio(props: React.HTMLAttributes<HTMLDivElement>) {
       </div>
       <div
         ref={source}
-        style={{ transform: "translateY(600px)" }}
+        style={{ transform: "translateY(100vh)" }}
         className={[
           "flex flex-col z-10",
           popinCard,
