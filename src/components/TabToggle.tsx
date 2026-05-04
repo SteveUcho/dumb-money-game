@@ -17,7 +17,10 @@ export function TabToggle(props: TabToggleProps) {
   };
 
   return (
-    <div {...rest} className={"rounded-full relative bg-gray-800 items-center p-1 " + className}>
+    <div
+      {...rest}
+      className={"rounded-full relative bg-gray-100 dark:bg-gray-800 items-center p-1 " + className}
+    >
       <motion.div
         layout
         transition={{ type: "spring", stiffness: 300, damping: 30 }}

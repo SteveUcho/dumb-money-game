@@ -9,7 +9,12 @@ export function GameBoard(props: React.HtmlHTMLAttributes<HTMLDivElement>) {
         height="100%"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <path d="M 0 200 h 150 l 100 -100 h 150" strokeOpacity={1} strokeWidth={2} />
+        <path
+          d="M 0 200 h 150 l 100 -100 h 150"
+          strokeOpacity={1}
+          strokeWidth={2}
+          fill="transparent"
+        />
         <text
           textAnchor="middle"
           transform="translate(48, 200) rotate(-90)"

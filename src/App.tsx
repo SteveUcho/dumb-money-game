@@ -8,7 +8,7 @@ import { StockPrice } from "./components/StockPrice";
 
 function App() {
   return (
-    <div className="h-dvh flex flex-col overflow-clip dark:bg-black dark:text-white relative">
+    <div className="h-dvh flex flex-col overflow-clip relative">
       {/* ui */}
       <NavBar />
       <StockPrice />

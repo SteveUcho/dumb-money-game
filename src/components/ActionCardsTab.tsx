@@ -78,7 +78,7 @@ export function ActionCards(props: ActionCardsProps) {
             className={[
               liquidGlass,
               liquidGlassShadow,
-              "p-6 text-center aspect-4/1 flex flex-col justify-center",
+              "p-6 text-center aspect-4/1 flex flex-col justify-center max-w-full",
             ].join(" ")}
           >
             <p>{cardData.body}</p>
