@@ -4,7 +4,7 @@ interface UICardProps extends React.HTMLAttributes<HTMLDivElement> {
   shadow?: boolean;
 }
 
-export function UICard(props: UICardProps) {
+export function LiquidGlass(props: UICardProps) {
   const { shadow, transition, ...rest } = props;
   return (
     <div

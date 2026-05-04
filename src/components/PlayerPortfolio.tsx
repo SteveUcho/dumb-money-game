@@ -1,6 +1,6 @@
 import { useAnimate, type ValueAnimationTransition } from "motion/react";
-import { UICard } from "./UICard";
 import { WithPriceColor } from "./WithPriceColor";
+import { liquidGlass, liquidGlassScale, liquidGlassShadow, popinCard } from "../utils/classNames";
 
 export function PlayerPortfolio(props: React.HTMLAttributes<HTMLDivElement>) {
   const [source, animate] = useAnimate();
@@ -24,17 +24,22 @@ export function PlayerPortfolio(props: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <>
       <div className="absolute bottom-4 right-4 ">
-        <UICard shadow transition className="dark:text-white flex gap-5">
+        <div className={["flex gap-5", liquidGlass, liquidGlassScale, liquidGlassScale].join(" ")}>
           <WithPriceColor price={10} onClick={openCard(true)}>
             <span className="font-bold">Portfolio ▲</span>
           </WithPriceColor>
-        </UICard>
+        </div>
       </div>
-      <UICard
+      <div
         ref={source}
-        shadow
         style={{ transform: "translateY(600px)" }}
-        className={"rounded-b-none flex flex-col dark:text-white z-10 " + props.className}
+        className={[
+          "flex flex-col z-10",
+          popinCard,
+          liquidGlass,
+          liquidGlassShadow,
+          props.className,
+        ].join(" ")}
       >
         <div
           className="absolute right-6 top-4 text-xl text-gray-500 z-20"
@@ -43,7 +48,7 @@ export function PlayerPortfolio(props: React.HTMLAttributes<HTMLDivElement>) {
           X
         </div>
         <h3 className="text-3xl pb-2 border-b border-gray-400">Portfolio</h3>
-        <div className="flex-1 md:grid md:grid-cols-2 gap-20 overflow-auto">
+        <div className="flex-1 overflow-auto">
           <div className="py-2 flex items-center justify-between">
             <h3 className="text-2xl">Cash</h3>
             <div className="">$500</div>
@@ -93,7 +98,7 @@ export function PlayerPortfolio(props: React.HTMLAttributes<HTMLDivElement>) {
           <h3 className="inline text-2xl">Net Worth</h3>
           <p className="inline text-lg">$500</p>
         </div>
-      </UICard>
+      </div>
     </>
   );
 }

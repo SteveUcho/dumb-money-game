@@ -1,13 +1,30 @@
-import { UICard } from "./UICard";
+import { motion } from "motion/react";
+import { liquidGlass, liquidGlassShadow, popinCard } from "../utils/classNames";
 
-export default function GambleTab(props: React.HTMLAttributes<HTMLDivElement>) {
+interface GambleTabProps {
+  open: boolean;
+  handleClose: () => void;
+}
+
+export default function GambleTab(props: GambleTabProps) {
+  const { open, handleClose } = props;
   return (
-    <UICard shadow className={"rounded-b-none flex flex-col dark:text-white " + props.className}>
-      <div className="flex">
-        <div>Buy Option</div>
-        <div>Short META</div>
+    <motion.div
+      initial={{ y: 600 }}
+      animate={{ y: open ? 0 : 600 }}
+      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+      className={[popinCard, liquidGlass, liquidGlassShadow].join(" ")}
+    >
+      <div className="absolute right-6 top-4 text-xl text-gray-500 z-20" onClick={handleClose}>
+        X
       </div>
-      <div className="flex-1"></div>
-    </UICard>
+      <div className="flex flex-col sm:right-auto h-full">
+        <div className="flex">
+          <div>Buy Option</div>
+          <div>Short META</div>
+        </div>
+        <div className="flex-1"></div>
+      </div>
+    </motion.div>
   );
 }

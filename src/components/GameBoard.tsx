@@ -11,7 +11,7 @@ export function GameBoard(props: React.HtmlHTMLAttributes<HTMLDivElement>) {
       >
         <path d="M 0 200 h 150 l 100 -100 h 150" strokeOpacity={1} strokeWidth={2} />
         <text
-          text-anchor="middle"
+          textAnchor="middle"
           transform="translate(48, 200) rotate(-90)"
           opacity={0.3}
           // x={50}
