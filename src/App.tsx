@@ -15,6 +15,7 @@ function App() {
       {/* Game Content */}
       <GameBoard className="flex-1" />
       <OrderBook className="h-1/2 md:h-1/3" />
+      {/* floating items */}
       <PlayerPortfolio className="sm:left-auto" />
       <ActionSelector />
     </div>
