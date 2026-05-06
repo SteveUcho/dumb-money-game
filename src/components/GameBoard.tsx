@@ -155,8 +155,11 @@ export function GameBoard(props: React.HtmlHTMLAttributes<HTMLDivElement>) {
         ref={scope}
         width="100%"
         height="100%"
-        onMouseMove={hoverHandler}
-        onMouseLeave={onMouseLeave}
+        onPointerMove={hoverHandler}
+        onPointerDown={hoverHandler}
+        onPointerCancel={onMouseLeave}
+        onPointerLeave={onMouseLeave}
+        style={{ touchAction: "none" }}
       >
         <line
           x1={"28%"}
