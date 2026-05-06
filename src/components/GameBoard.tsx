@@ -1,6 +1,8 @@
 import type React from "react";
 import { motion, useAnimate } from "motion/react";
 import { useEffect, useState } from "react";
+import { useSetAtom } from "jotai";
+import { stockPriceHoverAtom } from "../utils/atoms";
 
 type DataPoints = { x: number; y: number }[];
 
@@ -45,9 +47,40 @@ function convertToPath(dataPoints: DataPoints): string {
   return "M" + dataPoints.map((point) => `${point.x},${point.y}`).join("L");
 }
 
+function getYFromX(points: DataPoints, x: number): number | null {
+  if (!points || points.length === 0) return null;
+
+  // Clamp to bounds
+  if (x <= points[0].x) return points[0].y;
+  if (x >= points[points.length - 1].x) {
+    return points[points.length - 1].y;
+  }
+
+  // Binary search to find the segment
+  let left = 0;
+  let right = points.length - 1;
+
+  while (left < right - 1) {
+    const mid = Math.floor((left + right) / 2);
+    if (points[mid].x <= x) {
+      left = mid;
+    } else {
+      right = mid;
+    }
+  }
+
+  const p1 = points[left];
+  const p2 = points[left + 1];
+
+  // Linear interpolation
+  const t = (x - p1.x) / (p2.x - p1.x);
+  return p1.y + t * (p2.y - p1.y);
+}
+
 export function GameBoard(props: React.HtmlHTMLAttributes<HTMLDivElement>) {
   const [scope, animate] = useAnimate();
   const [boardDimensions, setBoardDimensions] = useState({ width: 100, height: 100 });
+  const setStockPriceHover = useSetAtom(stockPriceHoverAtom);
 
   const boardPoints = transformPoints(dataPoints, boardDimensions);
   const stockLinePath = convertToPath(boardPoints);
@@ -58,47 +91,29 @@ export function GameBoard(props: React.HtmlHTMLAttributes<HTMLDivElement>) {
 
     const stockPath = scope.current?.querySelector("path");
     const hoverLine = scope.current?.querySelector("#hover-line");
-    const circle = scope.current?.querySelector("#hover-circle");
+    const hoverCircle = scope.current?.querySelector("#hover-circle");
 
-    hoverLine.setAttribute("opacity", 1);
-    circle.setAttribute("opacity", 1);
-
+    // set corect line position
     hoverLine.setAttribute("x1", mouseX);
     hoverLine.setAttribute("x2", mouseX);
 
+    // show hover line
+    hoverLine.setAttribute("opacity", 1);
+    hoverCircle.setAttribute("opacity", 1);
+
+    const boxWidth = rect.right - rect.x / rect.left;
+    const widthPercent = mouseX / boxWidth;
+    const priceY = getYFromX(dataPoints, 1000 * widthPercent);
+    setStockPriceHover(priceY ?? 0);
+
     const points = boardPoints;
 
-    if (!stockPath || !circle) return;
-    if (!points || points.length === 0) return;
-    if (mouseX <= points[0].x) {
-      circle.setAttribute("cx", String(points[0].x));
-      circle.setAttribute("cy", String(points[0].y));
-      return;
-    }
-    if (mouseX >= points[points.length - 1].x) {
-      const last = points[points.length - 1];
-      circle.setAttribute("cx", String(last.x));
-      circle.setAttribute("cy", String(last.y));
-      return;
-    }
-    let left = 0;
-    let right = points.length - 1;
-    while (left < right - 1) {
-      const mid = Math.floor((left + right) / 2);
-      if (points[mid].x <= mouseX) {
-        left = mid;
-      } else {
-        right = mid;
-      }
-    }
-    const p1 = points[left];
-    const p2 = points[left + 1];
+    if (!stockPath || !hoverCircle) return;
 
-    // Linear interpolation within the segment
-    const t = (mouseX - p1.x) / (p2.x - p1.x);
-    const y = p1.y + t * (p2.y - p1.y);
-    circle.setAttribute("cx", String(mouseX));
-    circle.setAttribute("cy", String(y));
+    const pathY = getYFromX(points, mouseX);
+
+    hoverCircle.setAttribute("cx", mouseX);
+    hoverCircle.setAttribute("cy", pathY);
   };
 
   const onMouseLeave = () => {
@@ -107,6 +122,8 @@ export function GameBoard(props: React.HtmlHTMLAttributes<HTMLDivElement>) {
 
     hoverLine.setAttribute("opacity", 0);
     circle.setAttribute("opacity", 0);
+
+    setStockPriceHover(null);
   };
 
   useEffect(() => {
