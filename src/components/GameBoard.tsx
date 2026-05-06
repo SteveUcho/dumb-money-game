@@ -8,7 +8,8 @@ type DataPoints = { x: number; y: number }[];
 // x is from 0 to 1000 -- for now? --- per quarter
 const dataPoints: DataPoints = [
   { x: 0, y: 0 },
-  { x: 280, y: 0 },
+  { x: 120, y: 0 },
+  { x: 280, y: -50 },
   { x: 610, y: 50 },
   { x: 950, y: 50 },
 ];
@@ -28,7 +29,7 @@ function transformPoints(
     maxY = Math.max(maxY, point.y);
   });
   let offset = 0;
-  if (minY < 0) offset = minY;
+  if (minY < 0) offset = minY * -1;
   offset += bottomPadding;
   let yDiff = maxY - minY;
   return dataPoints.map((point) => {
@@ -51,6 +52,63 @@ export function GameBoard(props: React.HtmlHTMLAttributes<HTMLDivElement>) {
   const boardPoints = transformPoints(dataPoints, boardDimensions);
   const stockLinePath = convertToPath(boardPoints);
 
+  const hoverHandler: React.MouseEventHandler<SVGElement> = (event) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+
+    const stockPath = scope.current?.querySelector("path");
+    const hoverLine = scope.current?.querySelector("#hover-line");
+    const circle = scope.current?.querySelector("#hover-circle");
+
+    hoverLine.setAttribute("opacity", 1);
+    circle.setAttribute("opacity", 1);
+
+    hoverLine.setAttribute("x1", mouseX);
+    hoverLine.setAttribute("x2", mouseX);
+
+    const points = boardPoints;
+
+    if (!stockPath || !circle) return;
+    if (!points || points.length === 0) return;
+    if (mouseX <= points[0].x) {
+      circle.setAttribute("cx", String(points[0].x));
+      circle.setAttribute("cy", String(points[0].y));
+      return;
+    }
+    if (mouseX >= points[points.length - 1].x) {
+      const last = points[points.length - 1];
+      circle.setAttribute("cx", String(last.x));
+      circle.setAttribute("cy", String(last.y));
+      return;
+    }
+    let left = 0;
+    let right = points.length - 1;
+    while (left < right - 1) {
+      const mid = Math.floor((left + right) / 2);
+      if (points[mid].x <= mouseX) {
+        left = mid;
+      } else {
+        right = mid;
+      }
+    }
+    const p1 = points[left];
+    const p2 = points[left + 1];
+
+    // Linear interpolation within the segment
+    const t = (mouseX - p1.x) / (p2.x - p1.x);
+    const y = p1.y + t * (p2.y - p1.y);
+    circle.setAttribute("cx", String(mouseX));
+    circle.setAttribute("cy", String(y));
+  };
+
+  const onMouseLeave = () => {
+    const hoverLine = scope.current?.querySelector("#hover-line");
+    const circle = scope.current?.querySelector("#hover-circle");
+
+    hoverLine.setAttribute("opacity", 0);
+    circle.setAttribute("opacity", 0);
+  };
+
   useEffect(() => {
     if (!scope.current) return;
 
@@ -67,20 +125,25 @@ export function GameBoard(props: React.HtmlHTMLAttributes<HTMLDivElement>) {
 
   useEffect(() => {
     const path = scope.current.querySelector("path");
-    const circle = scope.current.querySelector("circle");
+    const followCircle = scope.current.querySelector("#follow-circle");
+    const endCircle = scope.current.querySelector("#end-circle");
     const totalLength = path.getTotalLength();
 
     animate(
       path,
       { pathLength: 1 },
       {
-        delay: 0.3,
         type: "spring",
+        delay: 0.3,
         duration: 3,
         onUpdate: (latest) => {
           const point = path.getPointAtLength(latest * totalLength);
-          circle.setAttribute("cx", point.x);
-          circle.setAttribute("cy", point.y);
+          followCircle.setAttribute("cx", point.x);
+          followCircle.setAttribute("cy", point.y);
+        },
+        onComplete: () => {
+          followCircle.setAttribute("opacity", 0);
+          endCircle.setAttribute("opacity", 1);
         },
       },
     );
@@ -88,7 +151,13 @@ export function GameBoard(props: React.HtmlHTMLAttributes<HTMLDivElement>) {
 
   return (
     <div {...props} className={"px-4 " + props.className}>
-      <svg ref={scope} width="100%" height="100%">
+      <svg
+        ref={scope}
+        width="100%"
+        height="100%"
+        onMouseMove={hoverHandler}
+        onMouseLeave={onMouseLeave}
+      >
         <line
           x1={"28%"}
           y1="40"
@@ -175,7 +244,42 @@ export function GameBoard(props: React.HtmlHTMLAttributes<HTMLDivElement>) {
           fill="transparent"
           initial={{ pathLength: 0 }}
         />
-        <circle cx="0" cy="50%" r="8" strokeWidth={4} className="stroke-white fill-rh-green" />
+        <line
+          id="hover-line"
+          x1="0"
+          y1="40"
+          x2="0"
+          y2={"100%"}
+          opacity="0"
+          stroke="white"
+          strokeWidth="2"
+        />
+        <circle
+          id="hover-circle"
+          cx="10"
+          cy="10"
+          r="8"
+          opacity="0"
+          strokeWidth={4}
+          className="dark:stroke-black fill-rh-green"
+        />
+        <circle
+          id="follow-circle"
+          cx="0"
+          cy="0"
+          r="8"
+          strokeWidth={4}
+          className="dark:stroke-white fill-rh-green"
+        />
+        <circle
+          id="end-circle"
+          cx="95%"
+          cy={boardPoints.at(-1)?.y ?? 0}
+          r="8"
+          opacity={0}
+          strokeWidth={4}
+          className="dark:stroke-white fill-rh-green"
+        />
       </svg>
     </div>
   );
