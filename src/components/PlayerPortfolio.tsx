@@ -23,12 +23,18 @@ export function PlayerPortfolio(props: React.HTMLAttributes<HTMLDivElement>) {
 
   return (
     <>
-      <div className="absolute bottom-4 right-4 ">
-        <div className={["flex gap-5", liquidGlass, liquidGlassScale, liquidGlassScale].join(" ")}>
-          <WithPriceColor price={10} onClick={openCard(true)}>
-            <span className="font-bold">Portfolio ▲</span>
-          </WithPriceColor>
-        </div>
+      <div
+        className={[
+          "flex gap-5 absolute bottom-4 right-4",
+          liquidGlass,
+          liquidGlassScale,
+          liquidGlassScale,
+        ].join(" ")}
+        onClick={openCard(true)}
+      >
+        <WithPriceColor price={10} className="font-bold">
+          Portfolio ▲
+        </WithPriceColor>
       </div>
       <div
         ref={source}

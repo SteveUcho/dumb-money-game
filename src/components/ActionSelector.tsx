@@ -15,12 +15,12 @@ export function ActionSelector() {
   return (
     <>
       <div className="absolute bottom-4 left-4 ">
-        <div className={["flex gap-5", liquidGlass, liquidGlassScale].join(" ")}>
-          <WithPriceColor price={10} onClick={handleClick(0)}>
-            <span className="font-bold">Actions ▲</span>
+        <div className={["flex", liquidGlass, liquidGlassScale].join(" ")} style={{ padding: 0 }}>
+          <WithPriceColor price={10} onClick={handleClick(0)} className="font-bold py-4 pl-4 pr-3">
+            Actions ▲
           </WithPriceColor>
-          <WithPriceColor price={-10} onClick={handleClick(1)}>
-            <span className="font-bold">Gamble ▼</span>
+          <WithPriceColor price={-10} onClick={handleClick(1)} className="font-bold py-4 pl-3 pr-4">
+            Gamble ▼
           </WithPriceColor>
         </div>
       </div>
