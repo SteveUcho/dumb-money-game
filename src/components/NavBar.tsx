@@ -1,11 +1,13 @@
-import { liquidGlass, liquidGlassScale, liquidGlassShadow } from "../utils/classNames";
+import { MenuButton } from "./MenuButton";
+import { useAtomValue } from "jotai";
+import { showWelcomeModalAtom } from "../utils/atoms";
 
 export function NavBar() {
+  const showWelcomeModal = useAtomValue(showWelcomeModalAtom);
+
   return (
-    <div className="dark:text-white flex flex-row-reverse p-4">
-      <div className={[liquidGlass, liquidGlassShadow, liquidGlassScale].join(" ")}>
-        <h1 className="text-xl font-bold">DM</h1>
-      </div>
+    <div className={`flex flex-row-reverse p-4 ${showWelcomeModal ? "invisible" : ""}`}>
+      <MenuButton />
     </div>
   );
 }

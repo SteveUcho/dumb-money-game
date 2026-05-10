@@ -1,5 +1,6 @@
 import "./App.css";
 import { ActionSelector } from "./components/ActionSelector";
+import { WelcomeModal } from "./components/SetupFlow/WelcomeModal";
 import { GameBoard } from "./components/GameBoard";
 import { NavBar } from "./components/NavBar";
 import { OrderBook } from "./components/OrderBook";
@@ -18,6 +19,7 @@ function App() {
       {/* floating items */}
       <PlayerPortfolio className="sm:left-auto" />
       <ActionSelector />
+      <WelcomeModal />
     </div>
   );
 }
