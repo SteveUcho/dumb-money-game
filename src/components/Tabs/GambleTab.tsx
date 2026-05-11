@@ -1,12 +1,12 @@
 import { motion } from "motion/react";
-import { liquidGlass, liquidGlassShadow, popinCard } from "../utils/classNames";
+import { liquidGlass, liquidGlassShadow, popinCard } from "@/utils/classNames";
 
 interface GambleTabProps {
   open: boolean;
   handleClose: () => void;
 }
 
-export default function GambleTab(props: GambleTabProps) {
+export function GambleTab(props: GambleTabProps) {
   const { open, handleClose } = props;
   return (
     <motion.div

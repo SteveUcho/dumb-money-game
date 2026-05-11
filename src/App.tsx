@@ -1,11 +1,10 @@
 import "./App.css";
-import { ActionSelector } from "./components/ActionSelector";
+import { ActionSelector } from "./components/Tabs/ActionSelector";
 import { WelcomeModal } from "./components/SetupFlow/WelcomeModal";
 import { GameBoard } from "./components/GameBoard";
 import { NavBar } from "./components/NavBar";
-import { OrderBook } from "./components/OrderBook";
-import { PlayerPortfolio } from "./components/PlayerPortfolio";
 import { StockPrice } from "./components/StockPrice";
+import { OrderHistory } from "./components/OrderHistory";
 
 function App() {
   return (
@@ -15,9 +14,8 @@ function App() {
       <StockPrice />
       {/* Game Content */}
       <GameBoard className="flex-1" />
-      <OrderBook className="h-1/2 md:h-1/3" />
+      <OrderHistory className="h-1/2 md:h-1/3" />
       {/* floating items */}
-      <PlayerPortfolio className="sm:left-auto" />
       <ActionSelector />
       <WelcomeModal />
     </div>
