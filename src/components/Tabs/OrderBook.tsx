@@ -3,6 +3,7 @@ import { GridHeader } from "../GridHeader";
 import { WithPriceColor } from "../WithPriceColor";
 import { motion } from "motion/react";
 import { liquidGlass, liquidGlassShadow, popinCard } from "@/utils/classNames";
+import DotAndCross from "../images/dotAndCross.svg";
 
 const orderBookData: StockOrder[] = [
   {
@@ -22,8 +23,8 @@ export function OrderBook(props: TabProps) {
       transition={{ type: "spring", stiffness: 400, damping: 30 }}
       className={["flex flex-col z-10", popinCard, liquidGlass, liquidGlassShadow].join(" ")}
     >
-      <div className="absolute right-6 top-4 text-xl text-gray-500 z-20" onClick={handleClose}>
-        X
+      <div className="absolute right-4 top-4 text-xl text-gray-500 z-20" onClick={handleClose}>
+        <img src={DotAndCross} alt="Close" className="w-6 h-6" />
       </div>
       <div className="pb-2">
         <div className="text-2xl">Order Book</div>
