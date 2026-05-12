@@ -50,7 +50,13 @@ export function OrderBook(props: TabProps) {
               <div key={item.id} className="grid grid-cols-3">
                 <div>{item.shares}</div>
                 <div>${item.ask}</div>
-                <WithPriceColor border price={-10} className="rounded-full text-center p-1">
+                <WithPriceColor
+                  as={motion.div}
+                  border
+                  price={-10}
+                  className="text-center p-1 rounded-full"
+                  whileTap={{ scale: 0.9 }}
+                >
                   ${item.shares * item.ask}
                 </WithPriceColor>
               </div>

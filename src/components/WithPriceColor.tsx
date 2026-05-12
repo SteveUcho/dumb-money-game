@@ -1,19 +1,20 @@
-import type { ReactNode } from "react";
+import type { ElementType } from "react";
 
-interface WithPriceColorProps extends React.HTMLAttributes<HTMLDivElement> {
+type WithPriceColorProps<T extends ElementType> = {
+  as?: T;
   price: number;
   border?: boolean;
-  children: ReactNode;
-}
+} & React.ComponentPropsWithoutRef<T>;
 
-export function WithPriceColor(props: WithPriceColorProps) {
-  const { price, border, className, ...rest } = props;
+export function WithPriceColor<T extends ElementType>(props: WithPriceColorProps<T>) {
+  const { price, border, className, as: Tag = "div", ...rest } = props;
   const isPositive = price > 0;
   const colorClass = isPositive ? "text-rh-green" : "text-rh-red";
   const borderClass = isPositive ? "border border-rh-green" : "border border-rh-red";
+
   return (
-    <div {...rest} className={[colorClass, border ? borderClass : undefined, className].join(" ")}>
+    <Tag {...rest} className={[colorClass, border ? borderClass : undefined, className].join(" ")}>
       {props.children}
-    </div>
+    </Tag>
   );
 }

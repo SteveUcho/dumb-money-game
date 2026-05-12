@@ -57,7 +57,8 @@ export function ActionCards() {
 
   return (
     <>
-      <div
+      <motion.div
+        whileTap={{ scale: 0.9 }}
         className={[
           "absolute bottom-4 left-4 flex font-bold text-rh-green px-5.5",
           liquidGlass,
@@ -67,7 +68,7 @@ export function ActionCards() {
         onClick={openCard(true)}
       >
         ▲
-      </div>
+      </motion.div>
       <motion.div
         variants={listVariant}
         initial={{ y: 600 }}
@@ -75,7 +76,8 @@ export function ActionCards() {
         style={{ height: "unset" }}
         className={"flex flex-col gap-4 " + popinCard}
       >
-        <div
+        <motion.div
+          whileTap={{ scale: 0.9 }}
           style={{ border: "1px solid var(--color-rh-red)" }}
           className={[
             "absolute right-0 -top-18 text-xl z-20 rounded-full text-rh-red",
@@ -86,12 +88,14 @@ export function ActionCards() {
           onClick={() => setOpen(false)}
         >
           Close
-        </div>
+        </motion.div>
         {data.map((cardData) => {
           return (
             <motion.div
               key={cardData.id}
+              whileTap={{ scale: 0.9 }}
               variants={itemVariant}
+              onClick={() => setOpen(false)}
               className={[
                 liquidGlass,
                 liquidGlassShadow,

@@ -68,7 +68,13 @@ export function PlayerPortfolio(props: TabProps) {
             <WithPriceColor price={1}>
               <div>+0.62%</div>
             </WithPriceColor>
-            <WithPriceColor border price={1} className="text-center rounded-full px-3 py-1">
+            <WithPriceColor
+              as={motion.div}
+              border
+              price={1}
+              className="text-center rounded-full px-3 py-1"
+              whileTap={{ scale: 0.9 }}
+            >
               SELL
             </WithPriceColor>
           </div>
