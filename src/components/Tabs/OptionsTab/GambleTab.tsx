@@ -57,14 +57,14 @@ export function GambleTab(props: GambleTabProps) {
       <div className="absolute right-4 top-5 text-xl text-gray-500 z-20" onClick={handleClose}>
         <img src={DotAndCross} alt="Close" className="w-6 h-6" />
       </div>
+      <TabToggle
+        onActiveIndexChange={(index) => setTab(index === 0 ? "call" : "put")}
+        className="mr-8 mb-2"
+      >
+        <div>Call</div>
+        <div>Put</div>
+      </TabToggle>
       <div className="sm:right-auto flex flex-col gap-4 flex-1 overflow-auto">
-        <TabToggle
-          onActiveIndexChange={(index) => setTab(index === 0 ? "call" : "put")}
-          className="mr-8"
-        >
-          <div>Call</div>
-          <div>Put</div>
-        </TabToggle>
         <div className="flex flex-col gap-2">
           <div className="flex justify-between">
             <div>
