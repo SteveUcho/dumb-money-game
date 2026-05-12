@@ -35,10 +35,10 @@ export function GambleTab(props: GambleTabProps) {
       if (newValue === "") {
         setter({ string: "$0.00", number: 0 });
         return;
-      } else if (!newValue.startsWith("$")) {
-        newValue = "$" + newValue;
       }
-      setter({ string: newValue, number: Number(newValue.replace("$", "")) });
+      newValue = newValue.replace("$", "");
+      newValue = newValue.replace(/^0+/, "");
+      setter({ string: "$" + newValue, number: Number(newValue) });
     };
 
   return (
