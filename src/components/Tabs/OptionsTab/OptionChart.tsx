@@ -64,16 +64,27 @@ export function OptionChart(props: OptionChartProps) {
         onPointerDown={pointerHover}
         onPointerCancel={pointerLeave}
         onPointerLeave={pointerLeave}
+        className="fill-black dark:fill-white stroke-black dark:stroke-white"
       >
         {type === "call" ? (
           <>
             {/* green triangle in 4th quadrant */}
-            <polygon points="150,100 300,100 300,25" className="fill-rh-green" opacity={0.5} />
+            <polygon
+              points="150,100 300,100 300,25"
+              className="fill-rh-green"
+              opacity={0.5}
+              stroke="transparent"
+            />
             {/* line ontop of triangle */}
             <line x1="150" y1="100" x2="300" y2="25" stroke="black" strokeWidth="5" />
             <line x1="150" y1="100" x2="300" y2="25" className="stroke-rh-green" strokeWidth="3" />
             {/* red trapezoid in 2nd quadrant */}
-            <polygon points="25,100 25,125 100,125 150,100" className="fill-rh-red" opacity={0.5} />
+            <polygon
+              points="25,100 25,125 100,125 150,100"
+              className="fill-rh-red"
+              opacity={0.5}
+              stroke="transparent"
+            />
             {/* line under trapezoid */}
             <line x1="25" y1="125" x2="100" y2="125" stroke="black" strokeWidth="5" />
             <line x1="25" y1="125" x2="100" y2="125" className="stroke-rh-red" strokeWidth="3" />
@@ -83,7 +94,12 @@ export function OptionChart(props: OptionChartProps) {
         ) : (
           <>
             {/* green triangle in 1st quadrant */}
-            <polygon points="150,100 25,100 25,25" className="fill-rh-green" opacity={0.5} />
+            <polygon
+              points="150,100 25,100 25,25"
+              className="fill-rh-green"
+              opacity={0.5}
+              stroke="transparent"
+            />
             {/* line ontop of triangle */}
             <line x1="150" y1="100" x2="25" y2="25" stroke="black" strokeWidth="5" />
             <line x1="150" y1="100" x2="25" y2="25" className="stroke-rh-green" strokeWidth="3" />
@@ -92,6 +108,7 @@ export function OptionChart(props: OptionChartProps) {
               points="150,100 300,100 300,125 200,125 "
               className="fill-rh-red"
               opacity={0.5}
+              stroke="transparent"
             />
             {/* line under trapezoid */}
             <line x1="200" y1="125" x2="100%" y2="125" stroke="black" strokeWidth="5" />
@@ -101,32 +118,24 @@ export function OptionChart(props: OptionChartProps) {
           </>
         )}
         {/* dotted horizontal line at top */}
-        <line x1="0" y1="0" x2="100%" y2="0" stroke="white" strokeWidth="2" strokeDasharray="2 2" />
+        <line x1="0" y1="0" x2="100%" y2="0" strokeWidth="2" strokeDasharray="2 2" />
         {/* positive indicator */}
-        <text x="10" y="60" textAnchor="middle" fill="white" fontSize="20">
+        <text x="10" y="60" textAnchor="middle" fontSize="20">
           +
         </text>
         {/* 0 indicator */}
-        <text x="10" y="108" textAnchor="middle" fill="white" fontSize="20">
+        <text x="10" y="108" textAnchor="middle" fontSize="20">
           0
         </text>
         {/* solid horizontal line at the middle */}
-        <line x1="25" y1="100" x2="100%" y2="100" stroke="white" strokeWidth="1" />
+        <line x1="25" y1="100" x2="100%" y2="100" strokeWidth="1" />
 
         {/* negative indicator */}
-        <text x="10" y="160" textAnchor="middle" fill="white" fontSize="20">
+        <text x="10" y="160" textAnchor="middle" fontSize="20">
           -
         </text>
         {/* dotted horizontal line at bottom */}
-        <line
-          x1="0"
-          y1="200"
-          x2="100%"
-          y2="200"
-          stroke="white"
-          strokeWidth="2"
-          strokeDasharray="2 2"
-        />
+        <line x1="0" y1="200" x2="100%" y2="200" strokeWidth="2" strokeDasharray="2 2" />
         {/* vertical line down the center */}
         <line x1="50%" y1="0" x2="50%" y2="200" stroke="gray" />
         {/* vertical hover line down the center */}
@@ -135,7 +144,6 @@ export function OptionChart(props: OptionChartProps) {
           y1="0"
           x2={hoverPosition ? 300 * hoverPercent : "50%"}
           y2="200"
-          stroke="white"
         />
         {/* white circle at the middle */}
         <circle cx="50%" cy="100" r="5" fill="white" stroke="black" strokeWidth="1" />

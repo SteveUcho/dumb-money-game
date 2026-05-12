@@ -281,7 +281,7 @@ export function GameBoard(props: React.HtmlHTMLAttributes<HTMLDivElement>) {
           r="8"
           opacity="0"
           strokeWidth={4}
-          className="dark:stroke-black fill-rh-green"
+          className="stroke-white dark:stroke-black fill-rh-green"
         />
         <circle
           id="follow-circle"

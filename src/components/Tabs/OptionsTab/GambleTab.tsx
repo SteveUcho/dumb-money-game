@@ -46,7 +46,12 @@ export function GambleTab(props: GambleTabProps) {
       initial={{ y: "100vh" }}
       animate={{ y: open ? 0 : "100vh" }}
       transition={{ type: "spring", stiffness: 400, damping: 30 }}
-      className={[popinCard, liquidGlass, liquidGlassShadow, "flex flex-col"].join(" ")}
+      className={[
+        popinCard,
+        liquidGlass,
+        liquidGlassShadow,
+        "flex flex-col sm:left-auto z-10",
+      ].join(" ")}
     >
       <AvailableBalance />
       <div className="absolute right-4 top-5 text-xl text-gray-500 z-20" onClick={handleClose}>
