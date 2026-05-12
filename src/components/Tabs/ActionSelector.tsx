@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { liquidGlass, liquidGlassScale } from "../../utils/classNames";
-import { GambleTab } from "./GambleTab";
+import { GambleTab } from "./OptionsTab/GambleTab";
 import { ActionCards } from "./ActionCards";
 import { OrderBook } from "./OrderBook";
 import { PlayerPortfolio } from "./PlayerPortfolio";

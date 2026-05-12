@@ -3,17 +3,19 @@ import React, { useState, Children, cloneElement } from "react";
 import { motion } from "motion/react";
 
 interface TabToggleProps extends React.HTMLAttributes<HTMLDivElement> {
+  onActiveIndexChange?: (index: number) => void;
   children: ReactElement<HTMLDivElement>[];
 }
 
 export function TabToggle(props: TabToggleProps) {
-  const { children, className, ...rest } = props;
+  const { children, className, onActiveIndexChange, ...rest } = props;
   const childCount = Children.count(children);
 
   const [activeIndex, setActiveIndex] = useState(0);
 
   const handleClick = (index: number) => () => {
     setActiveIndex(index);
+    onActiveIndexChange?.(index);
   };
 
   return (

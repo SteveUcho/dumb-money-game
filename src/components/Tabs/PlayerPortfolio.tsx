@@ -3,7 +3,7 @@ import { liquidGlass, liquidGlassShadow, popinCard } from "@/utils/classNames";
 import type { OptionOrder, StockOrder, TabProps } from "@/utils/interfaceTypes";
 import { motion } from "motion/react";
 import { GridHeader } from "../GridHeader";
-import DotAndCross from "../images/dotAndCross.svg";
+import DotAndCross from "@/images/dotAndCross.svg";
 
 const orderData: (StockOrder | OptionOrder)[] = [
   {

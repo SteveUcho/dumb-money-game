@@ -6,3 +6,4 @@ export const showWelcomeModalAtom = atom<boolean>(true);
 
 export const usernameAtom = atomWithStorage<string | null>("username", null);
 export const currentLobbyAtom = atom<string | null>(null);
+export const availableBalanceAtom = atom<number>(10000);

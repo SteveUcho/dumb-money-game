@@ -85,7 +85,7 @@ export function GameBoard(props: React.HtmlHTMLAttributes<HTMLDivElement>) {
   const boardPoints = transformPoints(dataPoints, boardDimensions);
   const stockLinePath = convertToPath(boardPoints);
 
-  const hoverHandler: React.MouseEventHandler<SVGElement> = (event) => {
+  const pointerHover: React.MouseEventHandler<SVGElement> = (event) => {
     const rect = event.currentTarget.getBoundingClientRect();
     const mouseX = event.clientX - rect.left;
 
@@ -116,7 +116,7 @@ export function GameBoard(props: React.HtmlHTMLAttributes<HTMLDivElement>) {
     hoverCircle.setAttribute("cy", pathY);
   };
 
-  const onMouseLeave = () => {
+  const pointerLeave = () => {
     const hoverLine = scope.current?.querySelector("#hover-line");
     const circle = scope.current?.querySelector("#hover-circle");
 
@@ -172,10 +172,10 @@ export function GameBoard(props: React.HtmlHTMLAttributes<HTMLDivElement>) {
         ref={scope}
         width="100%"
         height="100%"
-        onPointerMove={hoverHandler}
-        onPointerDown={hoverHandler}
-        onPointerCancel={onMouseLeave}
-        onPointerLeave={onMouseLeave}
+        onPointerMove={pointerHover}
+        onPointerDown={pointerHover}
+        onPointerCancel={pointerLeave}
+        onPointerLeave={pointerLeave}
         style={{ touchAction: "none" }}
       >
         <line
