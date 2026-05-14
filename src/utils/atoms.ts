@@ -5,5 +5,7 @@ export const stockPriceHoverAtom = atom<number | null>(0);
 export const showWelcomeModalAtom = atom<boolean>(true);
 
 export const usernameAtom = atomWithStorage<string | null>("username", null);
+export const darkModeAtom = atomWithStorage<boolean>("darkMode", false);
+
 export const currentLobbyAtom = atom<string | null>(null);
 export const availableBalanceAtom = atom<number>(10000);

@@ -1,13 +1,16 @@
 import { liquidGlass, liquidGlassScale, liquidGlassShadow } from "../utils/classNames";
-import { usernameAtom } from "../utils/atoms";
-import { useAtomValue } from "jotai";
 
-export function MenuButton() {
-  const username = useAtomValue(usernameAtom);
+interface MenuButtonProps {
+  onClick?: () => void;
+}
 
+export function MenuButton({ onClick }: MenuButtonProps) {
   return (
-    <div className={[liquidGlass, liquidGlassShadow, liquidGlassScale].join(" ")}>
-      <h1 className="text-xl font-bold">{username || "DM"}</h1>
+    <div
+      className={[liquidGlass, liquidGlassShadow, liquidGlassScale, "max-w-fit"].join(" ")}
+      onClick={onClick}
+    >
+      <h1 className="text-xl font-bold">DM</h1>
     </div>
   );
 }
