@@ -2,9 +2,10 @@ import { liquidGlass, liquidGlassScale, liquidGlassShadow } from "@/utils/classN
 import { useSetAtom } from "jotai";
 import { usernameAtom } from "@/utils/atoms";
 import { useState } from "react";
-import { Link } from "react-router";
+import { useNavigate } from "react-router";
 
 function RegisterPage() {
+  const navigate = useNavigate();
   const setUsername = useSetAtom(usernameAtom);
   const [tempUsername, setTempUsername] = useState("");
 
@@ -12,6 +13,7 @@ function RegisterPage() {
     e.preventDefault();
     setUsername(tempUsername);
     setTempUsername("");
+    navigate("/home");
   };
 
   return (
@@ -26,7 +28,7 @@ function RegisterPage() {
       <div className="text-center">
         <h2 className="text-2xl font-bold pb-2">Welcome to Dumb Money</h2>
         <p className="text-lg">Get started by creating your username</p>
-        <form onSubmit={handleSubmit} className="my-4">
+        <form onSubmit={handleSubmit} className="mt-2 flex flex-col gap-2">
           <input
             required
             className="border border-gray-300 rounded p-2"
@@ -35,10 +37,10 @@ function RegisterPage() {
             value={tempUsername}
             onChange={(e) => setTempUsername(e.target.value)}
           />
+          <button className="mt-2 bg-rh-green text-white px-4 py-2 rounded" type="submit">
+            Home
+          </button>
         </form>
-        <Link to="/home" className="mt-2 bg-rh-green text-white px-4 py-2 rounded" type="submit">
-          Home
-        </Link>
       </div>
     </div>
   );
