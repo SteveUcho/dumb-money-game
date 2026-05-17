@@ -1,15 +1,12 @@
 import { liquidGlass, liquidGlassScale, liquidGlassShadow } from "@/utils/classNames";
-import { useAtom } from "jotai";
+import { useSetAtom } from "jotai";
 import { usernameAtom } from "@/utils/atoms";
 import { useState } from "react";
+import { Link } from "react-router";
 
-export function CreateUsernameModal() {
-  const [username, setUsername] = useAtom(usernameAtom);
+function RegisterPage() {
+  const setUsername = useSetAtom(usernameAtom);
   const [tempUsername, setTempUsername] = useState("");
-
-  if (username) {
-    return null;
-  }
 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,21 +26,22 @@ export function CreateUsernameModal() {
       <div className="text-center">
         <h2 className="text-2xl font-bold pb-2">Welcome to Dumb Money</h2>
         <p className="text-lg">Get started by creating your username</p>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="my-4">
           <input
             required
-            className="mt-2 border border-gray-300 rounded p-2"
+            className="border border-gray-300 rounded p-2"
             type="text"
             placeholder="Enter your username"
             value={tempUsername}
             onChange={(e) => setTempUsername(e.target.value)}
           />
-          <br />
-          <button className="mt-2 bg-rh-green text-white px-4 py-2 rounded" type="submit">
-            Start Game
-          </button>
         </form>
+        <Link to="/home" className="mt-2 bg-rh-green text-white px-4 py-2 rounded" type="submit">
+          Home
+        </Link>
       </div>
     </div>
   );
 }
+
+export default RegisterPage;

@@ -1,14 +1,13 @@
 import { MenuButton } from "./MenuButton";
-import { useAtomValue } from "jotai";
-import { showWelcomeModalAtom } from "../utils/atoms";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { darkModeAtom } from "../utils/atoms";
 import { useAtom } from "jotai";
 import { liquidGlass, liquidGlassShadow } from "../utils/classNames";
+import { AnimatePresence } from "motion/react";
+import { Link } from "react-router";
 
 export function NavBar() {
-  const showWelcomeModal = useAtomValue(showWelcomeModalAtom);
   const [isOpen, setIsOpen] = useState(false);
   const [darkMode, setDarkMode] = useAtom(darkModeAtom);
 
@@ -30,27 +29,40 @@ export function NavBar() {
   };
 
   return (
-    <div className={`flex flex-row-reverse p-4 ${showWelcomeModal ? "invisible" : ""}`}>
-      <div className="flex flex-col items-end">
+    <div className="flex flex-row-reverse p-4">
+      <div className="flex flex-col items-end relative">
         <MenuButton onClick={handleOpen} />
         {/* dropdown menu */}
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={isOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
-          className={[
-            liquidGlass,
-            liquidGlassShadow,
-            "mt-4 top-full right-0 w-fit text-right flex flex-col",
-          ].join(" ")}
-        >
-          <button
-            onClick={toggleTheme}
-            className="p-2 bg-gray-200 dark:bg-gray-800 rounded-md transition-colors text-nowrap"
-          >
-            Toggle Dark: {darkMode ? "🌙" : "☀️"}
-          </button>
-          <button className="pt-2">Logout</button>
-        </motion.div>
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className={[
+                liquidGlass,
+                liquidGlassShadow,
+                "absolute mt-4 top-full right-0 w-fit text-center flex flex-col z-50",
+              ].join(" ")}
+            >
+              <button
+                onClick={toggleTheme}
+                className="p-2 hover:bg-gray-200 hover:dark:bg-gray-800 text-nowrap border-b border-gray-800"
+              >
+                Toggle Dark
+              </button>
+              <Link
+                to="/home"
+                className="p-2 hover:bg-gray-200 hover:dark:bg-gray-800 text-nowrap border-b border-gray-800"
+              >
+                Home
+              </Link>
+              <button className="p-2 hover:bg-gray-200 hover:dark:bg-gray-800 text-nowrap border-b border-gray-800">
+                Logout
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
