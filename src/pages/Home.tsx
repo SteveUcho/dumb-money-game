@@ -25,6 +25,7 @@ const LandingPage = () => {
           whileTap={{ scale: 0.95 }}
           onClick={() => {
             setUsername(null);
+            localStorage.removeItem("username");
           }}
           className="border border-gray-400 p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-left"
         >
