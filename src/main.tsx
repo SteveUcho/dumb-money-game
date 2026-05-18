@@ -9,12 +9,17 @@ import LobbiesPage from "@/pages/Lobbies";
 import RegisterPage from "@/pages/Register";
 import Lobby from "@/pages/Lobby";
 import { PageLayout } from "./components/PageLayout";
+import Index from "./pages/Index";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <PageLayout />,
     children: [
+      {
+        index: true,
+        element: <Index />,
+      },
       {
         path: "/home",
         element: <HomePage />,
