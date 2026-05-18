@@ -3,6 +3,7 @@ import { motion, useAnimate } from "motion/react";
 import { useEffect, useState } from "react";
 import { useSetAtom } from "jotai";
 import { stockPriceHoverAtom } from "../utils/atoms";
+import { PlayerGamePaths } from "./PlayerGamePaths";
 
 type DataPoints = { x: number; y: number }[];
 
@@ -16,20 +17,75 @@ const dataPoints: DataPoints = [
   { x: 950, y: 50 },
 ];
 
-const topPadding = 20;
+const playersDataPoints: { player: string; points: DataPoints; color: string }[] = [
+  {
+    player: "Player 1",
+    points: [
+      { x: 0, y: 0 },
+      { x: 120, y: 10 },
+      { x: 280, y: 20 },
+      { x: 610, y: 50 },
+      { x: 950, y: 50 },
+    ],
+    color: "red",
+  },
+  {
+    player: "Player 2",
+    points: [
+      { x: 0, y: 0 },
+      { x: 120, y: 5 },
+      { x: 280, y: -300 },
+      { x: 610, y: 30 },
+      { x: 950, y: -200 },
+    ],
+    color: "blue",
+  },
+  {
+    player: "Player 3",
+    points: [
+      { x: 0, y: 0 },
+      { x: 120, y: 15 },
+      { x: 280, y: -100 },
+      { x: 610, y: 40 },
+      { x: 950, y: 400 },
+    ],
+    color: "green",
+  },
+  {
+    player: "Player 4",
+    points: [
+      { x: 0, y: 0 },
+      { x: 120, y: 15 },
+      { x: 280, y: 300 },
+      { x: 610, y: 40 },
+      { x: 950, y: -100 },
+    ],
+    color: "yellow",
+  },
+];
+
+const topPadding = 35;
 const bottomPadding = 20;
 
 function transformPoints(
   dataPoints: DataPoints,
   dimensions: { height: number; width: number },
+  yRange?: { min: number; max: number },
 ): DataPoints {
   if (!dataPoints.length) return [];
-  let minY = dataPoints[0].y;
-  let maxY = dataPoints[0].y;
-  dataPoints.forEach((point) => {
-    minY = Math.min(minY, point.y);
-    maxY = Math.max(maxY, point.y);
-  });
+  let minY: number;
+  let maxY: number;
+  if (yRange) {
+    minY = yRange.min;
+    maxY = yRange.max;
+  } else {
+    minY = 0;
+    maxY = 0;
+    dataPoints.forEach((point) => {
+      minY = Math.min(minY, point.y);
+      maxY = Math.max(maxY, point.y);
+    });
+  }
   let offset = 0;
   if (minY < 0) offset = minY * -1;
   offset += bottomPadding;
@@ -84,6 +140,22 @@ export function GameBoard(props: React.HtmlHTMLAttributes<HTMLDivElement>) {
 
   const boardPoints = transformPoints(dataPoints, boardDimensions);
   const stockLinePath = convertToPath(boardPoints);
+
+  const yRange = playersDataPoints.reduce(
+    (acc, player) => {
+      const min = Math.min(...player.points.map((point) => point.y));
+      const max = Math.max(...player.points.map((point) => point.y));
+      return {
+        min: Math.min(acc.min, min),
+        max: Math.max(acc.max, max),
+      };
+    },
+    { min: 0, max: 0 },
+  );
+  const playerBoardPoints = playersDataPoints.map((player) =>
+    transformPoints(player.points, boardDimensions, yRange),
+  );
+  const playerLinePaths = playerBoardPoints.map(convertToPath);
 
   const pointerHover: React.MouseEventHandler<SVGElement> = (event) => {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -141,7 +213,7 @@ export function GameBoard(props: React.HtmlHTMLAttributes<HTMLDivElement>) {
   }, []);
 
   useEffect(() => {
-    const path = scope.current.querySelector("path");
+    const path = scope.current.querySelector("#stock-line");
     const followCircle = scope.current.querySelector("#follow-circle");
     const endCircle = scope.current.querySelector("#end-circle");
     const totalLength = path.getTotalLength();
@@ -256,7 +328,9 @@ export function GameBoard(props: React.HtmlHTMLAttributes<HTMLDivElement>) {
         >
           Q1
         </text>
+        <PlayerGamePaths playerLinePaths={playerLinePaths} playersDataPoints={playersDataPoints} />
         <motion.path
+          id="stock-line"
           d={stockLinePath}
           strokeOpacity={1}
           strokeWidth={2}

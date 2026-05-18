@@ -9,7 +9,7 @@ function GamePage() {
       <StockPrice />
       {/* Game Content */}
       <GameBoard className="flex-1" />
-      <OrderHistory className="h-1/2 md:h-1/3" />
+      <OrderHistory className="h-2/3 md:h-1/3" />
       {/* floating items */}
       <ActionSelector />
     </div>
