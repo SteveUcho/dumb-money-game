@@ -44,7 +44,7 @@ const router = createBrowserRouter([
         element: <LobbiesPage />,
       },
       {
-        path: "/lobby",
+        path: "/lobby/:lobbyId",
         element: <Lobby />,
       },
     ],

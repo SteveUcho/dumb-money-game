@@ -67,7 +67,7 @@ function Lobbies() {
                 </button>
               ) : (
                 <Link
-                  to={`/lobby?lobby=${lobby.name}`}
+                  to={`/lobby/${lobby.name}`}
                   className="border border-rh-green text-rh-green p-1 rounded-xl"
                 >
                   Join

@@ -2,7 +2,7 @@ import { usernameAtom } from "@/utils/atoms";
 import { borderButton } from "@/utils/classNames";
 import { useAtomValue } from "jotai";
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 
 const lobbyData = {
   lobbyId: "123",
@@ -38,12 +38,13 @@ function Lobby() {
   const [conn, setConn] = useState<WebSocket | null>(null);
   const [messages, setMessages] = useState<WsMessage[]>([]);
   const username = useAtomValue(usernameAtom);
+  const params = useParams();
 
   useEffect(() => {
-    if (!username) return;
+    if (!username || !params.lobbyId) return;
     // Create WebSocket connection.
     const socket = new WebSocket(
-      `ws://${import.meta.env.VITE_BACKEND_URL}/ws/lobby/chat/${lobbyData.lobbyId}`,
+      `ws://${import.meta.env.VITE_BACKEND_URL}/ws/lobby/chat/${params.lobbyId}`,
     );
     setConn(socket);
 
@@ -54,7 +55,7 @@ function Lobby() {
         JSON.stringify({
           id: myUuid,
           type: "join_lobby",
-          lobbyId: lobbyData.lobbyId,
+          lobbyId: params.lobbyId,
           player: username,
         }),
       );
@@ -66,11 +67,13 @@ function Lobby() {
     });
 
     return () => {
-      const myUuid = self.crypto.randomUUID();
-      socket.send(JSON.stringify({ id: myUuid, type: "leave_lobby", player: username }));
+      if (socket.readyState === WebSocket.OPEN) {
+        const myUuid = self.crypto.randomUUID();
+        socket.send(JSON.stringify({ id: myUuid, type: "leave_lobby", player: username }));
+      }
       socket.close();
     };
-  }, [username, setConn, setMessages]);
+  }, [username, params]);
 
   const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
