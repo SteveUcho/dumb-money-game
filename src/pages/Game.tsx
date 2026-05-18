@@ -1,14 +1,11 @@
 import { ActionSelector } from "@/components/Tabs/ActionSelector";
 import { GameBoard } from "@/components/GameBoard";
-import { NavBar } from "@/components/NavBar";
 import { StockPrice } from "@/components/StockPrice";
 import { OrderHistory } from "@/components/OrderHistory";
 
 function GamePage() {
   return (
-    <div className="h-dvh flex flex-col overflow-clip relative">
-      {/* ui */}
-      <NavBar />
+    <div className="flex-1 flex flex-col">
       <StockPrice />
       {/* Game Content */}
       <GameBoard className="flex-1" />

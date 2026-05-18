@@ -1,4 +1,3 @@
-import { NavBar } from "@/components/NavBar";
 import { Link } from "react-router";
 import { motion } from "framer-motion";
 import { useAtom } from "jotai";
@@ -8,9 +7,7 @@ const LandingPage = () => {
   const [username, setUsername] = useAtom(usernameAtom);
 
   return (
-    <div className="flex flex-col relative">
-      {/* ui */}
-      <NavBar />
+    <div>
       Hello {username || "Guest"}
       <div className="flex flex-col gap-2 p-2">
         <Link

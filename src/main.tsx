@@ -7,30 +7,42 @@ import GamePage from "@/pages/Game";
 import HomePage from "@/pages/Home";
 import LobbiesPage from "@/pages/Lobbies";
 import RegisterPage from "@/pages/Register";
+import Lobby from "@/pages/Lobby";
+import { PageLayout } from "./components/PageLayout";
 
 const router = createBrowserRouter([
   {
-    path: "/home",
-    element: <HomePage />,
-  },
-  {
-    path: "/register",
-    element: <RegisterPage />,
-    loader: async () => {
-      // return data from here
-      const username = localStorage.getItem("username");
-      if (username) {
-        return redirect("/home");
-      }
-    },
-  },
-  {
-    path: "/game",
-    element: <GamePage />,
-  },
-  {
-    path: "/lobbies",
-    element: <LobbiesPage />,
+    path: "/",
+    element: <PageLayout />,
+    children: [
+      {
+        path: "/home",
+        element: <HomePage />,
+      },
+      {
+        path: "/register",
+        element: <RegisterPage />,
+        loader: async () => {
+          // return data from here
+          const username = localStorage.getItem("username");
+          if (username) {
+            return redirect("/home");
+          }
+        },
+      },
+      {
+        path: "/game",
+        element: <GamePage />,
+      },
+      {
+        path: "/lobbies",
+        element: <LobbiesPage />,
+      },
+      {
+        path: "/lobby",
+        element: <Lobby />,
+      },
+    ],
   },
 ]);
 

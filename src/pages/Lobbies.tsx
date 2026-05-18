@@ -1,5 +1,4 @@
 import { liquidGlass, liquidGlassShadow } from "@/utils/classNames";
-import { NavBar } from "@/components/NavBar";
 import { Link } from "react-router";
 import { LobbySignInModal } from "@/components/LobbySignInModal";
 import { useState } from "react";
@@ -42,9 +41,7 @@ function Lobbies() {
   const [showLobbySignInModal, setShowLobbySignInModal] = useState<string | null>(null);
 
   return (
-    <div className="h-dvh flex flex-col overflow-clip relative">
-      {/* ui */}
-      <NavBar />
+    <div>
       <div
         className={[
           "absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-6 w-7/8 text-center max-h-[60vh] flex flex-col",
@@ -70,7 +67,7 @@ function Lobbies() {
                 </button>
               ) : (
                 <Link
-                  to={`/game?lobby=${lobby.name}`}
+                  to={`/lobby?lobby=${lobby.name}`}
                   className="border border-rh-green text-rh-green p-1 rounded-xl"
                 >
                   Join
